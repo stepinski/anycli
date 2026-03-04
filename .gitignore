@@ -1,0 +1,33 @@
+# Binary output
+anycli
+dist/
+
+# Go build cache (you don't want to commit this)
+# Go modules cache lives in $GOPATH, not here — no need to ignore it
+*.test
+*.out
+
+# Environment files — NEVER commit API keys
+.env
+.env.local
+.env.*
+!.env.example        # but DO commit the example template
+
+# macOS noise
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor noise
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# GoReleaser output
+dist/
+
+# Test coverage output
+coverage.out
+coverage.html
