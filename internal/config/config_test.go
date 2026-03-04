@@ -28,8 +28,8 @@ func TestDir(t *testing.T) {
 	// Each test case is an anonymous struct.
 	// 'name' is what appears in test output.
 	cases := []struct {
-		name    string
-		xdgHome string // value to set XDG_CONFIG_HOME to ("" = unset)
+		name       string
+		xdgHome    string // value to set XDG_CONFIG_HOME to ("" = unset)
 		wantSuffix string // expected path suffix
 	}{
 		{
@@ -59,7 +59,6 @@ func TestDir(t *testing.T) {
 			}
 
 			got, err := Dir()
-
 			// In Go tests, err checking comes before result checking.
 			// If we expected success and got an error, fail immediately.
 			if err != nil {
@@ -173,9 +172,14 @@ func TestLoad_EnvOverride(t *testing.T) {
 
 	// Write config file with one value
 	cfgDir := filepath.Join(tmp, "anycli")
-	os.MkdirAll(cfgDir, 0700)
+	if err := os.MkdirAll(cfgDir, 0700); err != nil {
+		t.Fatalf("creating config dir: %v", err)
+	}
+
 	content := `workspace: "from-file"`
-	os.WriteFile(filepath.Join(cfgDir, "config.yaml"), []byte(content), 0600)
+	if err := os.WriteFile(filepath.Join(cfgDir, "config.yaml"), []byte(content), 0600); err != nil {
+		t.Fatalf("writing config file : %v", err)
+	}
 
 	// Set env var to a different value
 	// This should win over the config file
